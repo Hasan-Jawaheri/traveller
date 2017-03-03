@@ -15,8 +15,10 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from webapi import views
+from webapi import views, api
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
+
+    url(r'^get_nearby/', api.get_nearby, name="get_nearby"),
 ]
