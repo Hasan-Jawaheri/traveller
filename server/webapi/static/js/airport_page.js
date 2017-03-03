@@ -53,7 +53,7 @@ var airport_page = new function() {
         `);
 
         for (var i = 0; i < items.length; i++)
-            body.find("#items-container").append(items);
+            body.find("#items-container").append(items[i]);
 
         return body;
     };
