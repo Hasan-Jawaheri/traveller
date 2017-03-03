@@ -1,7 +1,6 @@
 
 var list_item = new function() {
     this.get = function(desc) {
-        console.log(desc);
         var main_photo = "http://www.lightideas.net.au/wp-content/themes/titan/wpsc-noimage.gif";
         if (desc.photos)
             if (desc.photos.length > 0)
@@ -30,7 +29,6 @@ var listing_page = new function() {
     };
 
     this.get_body = function(args) {
-        console.log(args);
         var obj = $(`
             <div id="items-container" class="col-xs-12">
             </div>

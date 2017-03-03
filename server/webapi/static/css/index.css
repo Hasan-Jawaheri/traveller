@@ -1,6 +1,6 @@
 
 body {
-    color: white;
+    color: #642211;
     font-size: 36pt;
 }
 
@@ -61,11 +61,10 @@ body {
 }
 .menu-card {
     background-color: #bbbbbb;
-    color: #55abda;
     margin-left: auto;
     margin-right: auto;
-    width: 300px;
-    height: 300px;
+    width: 400px;
+    height: 400px;
     text-align: center;
     box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }

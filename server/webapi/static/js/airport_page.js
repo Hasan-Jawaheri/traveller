@@ -5,7 +5,7 @@ var menu_item = new function() {
             <div class="col-xs-6 menu-card-container">
                 <div class="menu-card panel panel-default">
                     <br />
-                    ` + icon + `
+                    <span style="font-size: 60pt">` + icon + `</span>
                     <br />
                     <span>` + text + `</span>
                 </div>
@@ -21,6 +21,7 @@ var menu_item = new function() {
 var airport_page = new function() {
     this.categories = {};
     this.current_airport = undefined;
+    this.info_body = undefined;
 
     this.get_head = function(args) {
         var ap = args.airport;
@@ -34,14 +35,18 @@ var airport_page = new function() {
         this.categories = {};
 
         var photo = "";
-        if (ap.photos)
+        if (ap && ap.photos)
             photo = ap.photos[0];
 
-        var body = $(`
+        var name = "";
+        if (ap && ap.name)
+            name = ap.name;
+
+        this.info_body = $(`
             <div class="airport-info-container">
-                <img class="airport-photo" src="` + ap.photos[0] + `"></img>
+                <img class="airport-photo" src="` + photo + `"></img>
                 <div style="position: absolute; width: 100%; top: 20px; font-size: 46pt; text-align: center">
-                    <p class="airport-name">` + ap.name +  `<p>
+                    <p class="airport-name">` + name +  `<p>
                 </div>
             </div>
 
@@ -51,12 +56,16 @@ var airport_page = new function() {
             </div>
         `);
 
-        var me = this;
-        setTimeout(function() {
-            me.on_places_update(ap.name);
-        }, 200);
+        if (this.current_airport != undefined)
+            this.on_places_update(ap.name);
 
-        return body;
+        return this.info_body;
+    };
+
+    this.on_airports_update = function() {
+        if (this.current_airport == undefined) {
+            app.set_tab(1);
+        }
     };
 
     this.on_places_update = function(ap_name) {
@@ -64,21 +73,37 @@ var airport_page = new function() {
             return;
         this.current_airport = app.airports[ap_name];
 
+        var good_names = {
+            "restaurant": "Restaurants",
+            "food": "Restaurants",
+            "bakery": "Restaurants",
+            "cafe": "Coffee Shops",
+            "lodging": "Hotels",
+            "clothing_store": "Shopping",
+            "shoe_store": "Shopping",
+            "pharmacy": "Pharmacies",
+            "point_of_interest": "Popular",
+        };
+
         for (var i = 0; i < this.current_airport.places.length; i++) {
             var place = this.current_airport.places[i];
             var types = place.types;
             for (var t = 0; t < types.length; t++) {
-                if (!(types[t] in this.categories)) {
-                    this.categories[types[t]] = [place];
-                    $("#items-container").append(menu_item.get("", types[t]));
+                var type = types[t];
+                if (!(type in good_names))
+                   continue;
+                type = good_names[type];
+                if (!(type in this.categories)) {
+                    this.categories[type] = [place];
+                    this.info_body.append(menu_item.get("<span class='glyphicon glyphicon-star'></span>", type));
                 } else {
-                    var places_in_cat = this.categories[types[t]];
+                    var places_in_cat = this.categories[type];
                     var found = false;
                     for (var j = 0; j < places_in_cat.length && !found; j++)
                         if (places_in_cat[j].name == place.name)
                             found = true;
                     if (!found)
-                        this.categories[types[t]].push(place);
+                        this.categories[type].push(place);
                 }
             }
         }

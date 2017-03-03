@@ -53,7 +53,7 @@ var app = new function() {
         arrival_time: new Date((new Date()).getTime() + 180 * 60000),
     }, {
         airport_from: "Dubai International Airport",
-        airport_to: "Hethrow Airport",
+        airport_to: "Heathrow Airport",
         departure_time: new Date((new Date()).getTime() + (180 + 360) * 60000),
         arrival_time: new Date((new Date()).getTime() + (180 + 2000) * 60000),
     }];
@@ -64,7 +64,7 @@ var app = new function() {
 
         requester.begin_queue();
 
-        //this.load_page(airport_page, {});
+        this.load_page(airport_page, {});
     };
 
     this.load_page = function(page, args) {
@@ -75,20 +75,24 @@ var app = new function() {
         this.current_page = page;
     };
 
+    this.get_current_airport = function() {
+        var now = new Date();
+        var cur_airport = this.airports[this.flights[0].airport_from];
+        for (var i = 0; i < this.flights.length; i++) {
+            if (now.getTime() >= this.flights[i].departure_time.getTime())
+                cur_airport = this.airports[this.flights[i].airport_to];
+        }
+        return cur_airport;
+    };
+
     this.set_tab = function(tab_idx) {
         $(".bottom-tab").removeClass('active');
         $($(".bottom-tab")[tab_idx]).addClass('active');
         if (tab_idx == 0) {
-
+            this.load_page(dashboard_page, {});
         } else if (tab_idx == 1) {
-            var now = new Date();
-            var cur_airport = this.airports[this.flights[0].airport_from];
-            for (var i = 0; i < this.flights.length; i++) {
-                if (now.getTime() >= this.flights[i].departure_time)
-                    cur_airport = this.airports[this.flights[i].airport_to];
-            }
             this.load_page(airport_page, {
-                airport: cur_airport,
+                airport: this.get_current_airport(),
             });
         } else if (tab_idx == 2) {
 
@@ -125,7 +129,7 @@ var app = new function() {
                 photos: ["http://vizts.com/wp-content/uploads/2016/01/dubai-international-airport-in-dubai.jpg"],
                 places: []
             });
-        }, 3000);
+        }, 1);
 
         setTimeout(function() {
             on_airport_loaded({
@@ -134,7 +138,7 @@ var app = new function() {
                 photos: ["http://cdn.londonandpartners.com/visit/london-organisations/heathrow-airport/59517-640x360-heathrow-exterior-aircraft_640.jpg"],
                 places: []
             });
-        }, 6000);
+        }, 1);
     }
 
     this.populate_airport = function(airport_name) {
