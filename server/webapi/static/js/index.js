@@ -33,6 +33,15 @@ var app = new function() {
             });
         }
     };
+
+    this.getInfo = function() {
+        setTimeout(function() {
+            this.current_airport = {
+                name: "Hamad Int'l Airport",
+                photo: "i-am-a-photo",
+            }
+        }, 1);
+    };
 };
 
 $(document).ready(function() {
