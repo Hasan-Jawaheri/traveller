@@ -1,0 +1,16 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" class="page">
+        <ActionBar icon="" class="action-bar">
+            <ActionBar.actionItems>
+                <ActionItem>
+                    <ActionItem.actionView>
+                        <Button text="Home" class="action-item" tap="test"></Button>
+                    </ActionItem.actionView>
+                </ActionItem>
+                <ActionItem>
+                    <ActionItem.actionView>
+                        <Button text="Flights" class="action-item"></Button>
+                    </ActionItem.actionView>
+                </ActionItem>                      
+            </ActionBar.actionItems>
+        </ActionBar>
+</Page>
