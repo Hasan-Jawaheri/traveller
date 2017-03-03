@@ -1,0 +1,43 @@
+{% load staticfiles %}
+
+<html>
+<head>
+    <script src="{% static 'js/jquery-1.12.0.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <script src="{% static 'js/index.js' %}"></script>
+    <script src="{% static 'js/airport_page.js' %}"></script>
+    <script src="{% static 'js/listing_page.js' %}"></script>
+</head>
+<body>
+    <div id="top-bar" class="row">
+        <div class="col-xs-12">
+        </div>
+    </div>
+    <div id="view-content" class="row">
+        <div class="col-xs-12">
+        </div>
+    </div>
+    <div id="bottom-bar" class="row" style="padding-top: 20px;">
+        <div class="col-xs-3 bottom-tab" style="font-size: 56pt; text-align: center;" onclick="app.set_tab(0);">
+            <span class="glyphicon glyphicon-lg glyphicon-th-large"></span>
+            <h2>Dashboard</h2>
+        </div>
+        <div class="col-xs-3 bottom-tab" style="font-size: 56pt; text-align: center;" onclick="app.set_tab(1);">
+            <span class="glyphicon glyphicon-lg glyphicon-globe"></span>
+            <h2>Airport</h2>
+        </div>
+        <div class="col-xs-3 bottom-tab" style="font-size: 56pt; text-align: center;" onclick="app.set_tab(2);">
+            <span class="glyphicon glyphicon-lg glyphicon-star"></span>
+            <h2>Favorites</h2>
+        </div>
+        <div class="col-xs-3 bottom-tab" style="font-size: 56pt; text-align: center;" onclick="app.set_tab(3);">
+            <span class="glyphicon glyphicon-lg glyphicon-cog"></span>
+            <h2>Settings</h2>
+        </div>
+    </div>
+</body>
+</html>

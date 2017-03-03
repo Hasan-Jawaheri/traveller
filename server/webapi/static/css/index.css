@@ -1,0 +1,65 @@
+
+body {
+    color: white;
+    font-size: 36pt;
+}
+
+#top-bar {
+    height: 150px;
+    background-color: #888888;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    z-index: 10;
+}
+
+#view-content {
+    height: calc(100% - 300px);
+    background-color: #444444;
+    overflow-y: auto;
+}
+
+#bottom-bar {
+    height: 150px;
+    background-color: #888888;
+}
+
+.bottom-tab {
+}
+
+.airport-info-container {
+    width: 100%;
+    height: 500px;
+    position: relative;
+    text-align: center;
+    overflow: hidden;
+    -webkit-mask-image: -webkit-gradient(
+    linear, left top, left bottom,
+    color-stop(0.00,  rgba(0,0,0,1)),
+    color-stop(0.5,  rgba(0,0,0,1)),
+    color-stop(1.0,  rgba(0,0,0,0)));
+}
+
+.airport-photo {
+    width: 100%;
+    -webkit-mask-image: -webkit-gradient(
+    linear, left top, left bottom,
+    color-stop(0.00,  rgba(0,0,0,1)),
+    color-stop(0.8,  rgba(0,0,0,1)),
+    color-stop(1.0,  rgba(0,0,0,0)));
+}
+
+.airport-name {
+}
+
+.menu-card-container {
+    text-align: center;
+    margin-top: 50px;
+}
+.menu-card {
+    color: #55abda;
+    margin-left: auto;
+    margin-right: auto;
+    width: 300px;
+    height: 300px;
+    text-align: center;
+    box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}

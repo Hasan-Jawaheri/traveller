@@ -13,8 +13,8 @@ def get_nearby(r):
     params_dict = {
         "key": settings.PLACES_API_KEY,
         "location": "25.2605946,51.6137665",
-        "radius": "50000",
         "type": "lodging",
+        "rankby": "distance",
     }
 
     s = requests.session()
