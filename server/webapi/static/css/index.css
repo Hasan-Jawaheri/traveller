@@ -23,6 +23,11 @@ body {
 }
 
 .bottom-tab {
+    padding-top: 20px;
+    background-color: #888888;
+}
+.bottom-tab.active {
+    background-color: #999999;
 }
 
 .airport-info-container {
@@ -55,6 +60,7 @@ body {
     margin-top: 50px;
 }
 .menu-card {
+    background-color: #bbbbbb;
     color: #55abda;
     margin-left: auto;
     margin-right: auto;
@@ -64,8 +70,29 @@ body {
     box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
+#items-container {
+    overflow-y: auto;
+}
+
 .list-item-card {
-    width: 100%;
-    border-top: 5px solid black;
-    border-bottom: 5px solid black;
+    height: 200px;
+    margin-top: 20px;
+    background-color: #bbbbbb;
+}
+
+.list-item-photo-container {
+    padding: 20px;
+    text-align: center;
+}
+
+.list-item-photo {
+    max-height: 160px;
+    max-width: 160px;
+}
+
+.list-item-right {
+    position: absolute;
+    top: 50%;
+    height: 60px;
+    margin-top: -30px;
 }
