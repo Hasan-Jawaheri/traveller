@@ -100,6 +100,7 @@ body {
 
 #dashboard-container {
     overflow-y: auto;
+    height: 100%;
 }
 
 .dashboard-item-container {

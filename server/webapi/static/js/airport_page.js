@@ -82,22 +82,43 @@ var airport_page = new function() {
             "food": "Restaurants",
             "bakery": "Restaurants",
             "cafe": "Coffee Shops",
-            "lodging": "Hotels",
             "clothing_store": "Shopping",
             "shoe_store": "Shopping",
+            "electronics_store": "Shopping",
             "pharmacy": "Pharmacies",
             "point_of_interest": "Popular",
             "night_club": "Entertainment",
             "spa": "Entertainment",
-            "bank": "Miscellaneous",
-            "museum":  "Miscellaneous",
-            "mosque": "Miscellaneous",
-            "car_rental": "Transportation",
-            "taxi_stand": "Transportation",
-            "bus_station": "Transportation",
-            "train_station": "Transportation",
-            "parking": "Transportation",
+            "bank": "Utilities",
+            "museum":  "Utilities",
+            "mosque": "Utilities",
+            "travel_agency": "Utilities",
         };
+
+        if (app.get_stay_duration_minutes(ap_name) > 5 * 60) {
+            // add transportation
+            good_names = Object.assign(good_names, {
+                "car_rental": "Transportation",
+                "taxi_stand": "Transportation",
+                "bus_station": "Transportation",
+                "train_station": "Transportation",
+                "parking": "Transportation",
+            });
+        }
+
+        if (app.get_stay_duration_minutes(ap_name) > 12 * 60) {
+            // add hotels
+            good_names = Object.assign(good_names, {
+                "lodging": "Hotels",
+            });
+            requester.queue_request({
+                location: this.current_airport.location,
+                type: "lodging",
+                rankby: "distance",
+            }, function(r) {
+                app.on_airport_new_data(ap_name, r);
+            }, undefined, true);
+        }
 
         for (var i = 0; i < this.current_airport.places.length; i++) {
             var place = this.current_airport.places[i];

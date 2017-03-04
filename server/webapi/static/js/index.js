@@ -2,21 +2,35 @@
 var requester = new function() {
     this.key = "AIzaSyBsxSgXFkRkgkNwSw2A3i2I0WlqwVc1mwc";
 
+    this.cached_requests = {};
+
     this.requests_queue = [];
 
-    this.send_request = function(args, on_data, on_done) {
-        var url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=" + this.key;
+    this.make_url = function(args) {
+        var api = "nearbysearch/json";
+        if ("api" in args) {
+            api = args.api;
+            delete args.api;
+        }
+        var url = "https://maps.googleapis.com/maps/api/place/" + api + "?key=" + this.key;
         for (var key in args)
             url += "&" + key + "=" + args[key];
+        return url;
+    }
+
+    this.send_request = function(args, on_data, on_done) {
         var me = this;
+        var url = this.make_url(args);
         $.get(url, {}, function(r) {
+            me.cached_requests[url] = true;
             if (r.status == "OK") {
                 if (r.next_page_token)
                     me.queue_request({pagetoken: r.next_page_token}, on_data, on_done);
-                on_data(r.results);
+                if (on_data)
+                    on_data(r.results);
             }
             if (on_done)
-                on_done();
+                on_done(r);
         })
     };
 
@@ -35,12 +49,20 @@ var requester = new function() {
         setTimeout(process_queue, 1);
     };
 
-    this.queue_request = function(args, on_data, on_done) {
-        this.requests_queue.push({
+    this.queue_request = function(args, on_data, on_done, urgent) {
+        if (this.make_url(args) in this.cached_requests)
+            return;
+
+        var obj = {
             args: args,
             on_data: on_data,
             on_done: on_done,
-        })
+        };
+
+        if (urgent)
+            this.requests_queue.unshift(obj);
+        else
+            this.requests_queue.push(obj);
     };
 };
 
@@ -84,6 +106,22 @@ var app = new function() {
             }
         }
         return cur_airport;
+    };
+
+    this.get_stay_duration_minutes = function(ap_name) {
+        if (ap_name == this.flights[0].airport_from)
+            return 2 * 60;
+        if (ap_name == this.flights[this.flights.length-1].airport_to)
+            return 48 * 60;
+
+        for (var i = 1; i < this.flights.length; i++) {
+            if (ap_name == this.flights[i].airport_from) {
+                var duration_ms = this.flights[i].departure_time.getTime() - this.flights[i-1].arrival_time.getTime();
+                return duration_ms / (1000*60);
+            }
+        }
+
+        return 0;
     };
 
     this.set_tab = function(tab_idx) {
@@ -142,20 +180,29 @@ var app = new function() {
         }, 1);
     }
 
+    this.on_airport_new_data = function(airport_name, r) {
+        for (var i = 0; i < r.length; i++) {
+            var exists = false;
+            for (var j = 0; j < this.airports[airport_name].places.length; j++)
+                if (this.airports[airport_name].places[j].name == r[i].name)
+                    exists = true;
+            if (!exists)
+                this.airports[airport_name].places.push(r[i]);
+        }
+        if (this.current_page) {
+            if (this.current_page.on_places_update) {
+                this.current_page.on_places_update(airport_name);
+            }
+        }
+    }
+
     this.populate_airport = function(airport_name) {
         var me = this;
         requester.queue_request({
-            location: me.airports[airport_name].location,
+            location: this.airports[airport_name].location,
             radius: "1000",
         }, function(r) {
-            for (var i = 0; i < r.length; i++) {
-                me.airports[airport_name].places.push(r[i]);
-                if (me.current_page) {
-                    if (me.current_page.on_places_update) {
-                        me.current_page.on_places_update(airport_name);
-                    }
-                }
-            }
+            me.on_airport_new_data(airport_name, r);
         });
     };
 
