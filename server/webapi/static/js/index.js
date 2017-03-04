@@ -49,7 +49,7 @@ var app = new function() {
     this.flights = [{
         airport_from: "Hamad International Airport",
         airport_to: "Dubai International Airport",
-        departure_time: new Date((new Date()).getTime() + 80 * 60000),
+        departure_time: new Date((new Date()).getTime() + 60 * 60000),
         arrival_time: new Date((new Date()).getTime() + 180 * 60000),
     }, {
         airport_from: "Dubai International Airport",
@@ -79,8 +79,9 @@ var app = new function() {
         var now = new Date();
         var cur_airport = this.airports[this.flights[0].airport_from];
         for (var i = 0; i < this.flights.length; i++) {
-            if (now.getTime() >= this.flights[i].departure_time.getTime())
+            if (now.getTime() >= this.flights[i].departure_time.getTime()) {
                 cur_airport = this.airports[this.flights[i].airport_to];
+            }
         }
         return cur_airport;
     };
@@ -89,7 +90,7 @@ var app = new function() {
         $(".bottom-tab").removeClass('active');
         $($(".bottom-tab")[tab_idx]).addClass('active');
         if (tab_idx == 0) {
-            this.load_page(dashboard_page, {});
+            this.load_page(dashboard_page, this.flights);
         } else if (tab_idx == 1) {
             this.load_page(airport_page, {
                 airport: this.get_current_airport(),

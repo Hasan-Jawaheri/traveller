@@ -6,20 +6,20 @@ body {
 
 #top-bar {
     height: 150px;
-    background-color: #888888;
+    background-color: #642211;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     z-index: 10;
 }
 
 #view-content {
     height: calc(100% - 300px);
-    background-color: #444444;
+    background-color: #ffffff;
     overflow-y: auto;
 }
 
 #bottom-bar {
     height: 150px;
-    background-color: #888888;
+    background-color: #642211;
 }
 
 .bottom-tab {
@@ -53,6 +53,7 @@ body {
 }
 
 .airport-name {
+    text-shadow: 0px 0px 10px white;
 }
 
 .menu-card-container {
@@ -60,13 +61,13 @@ body {
     margin-top: 50px;
 }
 .menu-card {
-    background-color: #bbbbbb;
     margin-left: auto;
     margin-right: auto;
     width: 400px;
     height: 400px;
     text-align: center;
-    box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 #items-container {
@@ -76,7 +77,8 @@ body {
 .list-item-card {
     height: 200px;
     margin-top: 20px;
-    background-color: #bbbbbb;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .list-item-photo-container {
@@ -94,4 +96,15 @@ body {
     top: 50%;
     height: 60px;
     margin-top: -30px;
+}
+
+#dashboard-container {
+    overflow-y: auto;
+}
+
+.dashboard-item-container {
+    height: 200px;
+    margin-top: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }

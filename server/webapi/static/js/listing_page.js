@@ -5,7 +5,7 @@ var list_item = new function() {
         if (desc.photos)
             if (desc.photos.length > 0)
                 main_photo = desc.photos[0].url;
-        return $(`
+        var item = $(`
             <div class="list-item-card row">
                 <div class="list-item-photo-container col-xs-3">
                     <img class="list-item-photo" src="` + main_photo + `" />
@@ -18,13 +18,21 @@ var list_item = new function() {
                 </div>
             </div>
         `);
+        item.click(function() {
+        });
+        return item;
     };
 };
 
 var listing_page = new function() {
     this.get_head = function(args) {
-        var ap = args.airport;
         return $(`
+            <div class="col-xs-2" style="color: white; font-size: 60pt; padding: 20px; padding-top: 30px; text-align: center;">
+                ` + args.icon + `
+            </div>
+            <div class="col-xs-10" style="color: white; font-size: 50pt; padding: 20px;">
+                <span>` + args.title + `</span>
+            </div>
         `);
     };
 
@@ -34,8 +42,8 @@ var listing_page = new function() {
             </div>
         `);
 
-        for (var i = 0; i < args.length; i++) {
-            obj.append(list_item.get(args[i]));
+        for (var i = 0; i < args.places.length; i++) {
+            obj.append(list_item.get(args.places[i]));
         }
 
         return obj;

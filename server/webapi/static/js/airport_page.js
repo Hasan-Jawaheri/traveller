@@ -3,7 +3,7 @@ var menu_item = new function() {
     this.get = function(icon, text) {
         var item = $(`
             <div class="col-xs-6 menu-card-container">
-                <div class="menu-card panel panel-default">
+                <div class="menu-card panel-default">
                     <br />
                     <span style="font-size: 60pt">` + icon + `</span>
                     <br />
@@ -12,7 +12,11 @@ var menu_item = new function() {
             </div>
         `);
         item.find(".menu-card").click(function() {
-            app.load_page(listing_page, airport_page.get_places(text));
+            app.load_page(listing_page, {
+                title: text,
+                icon: icon,
+                places: airport_page.get_places(text)
+            });
         });
         return item;
     }
@@ -83,6 +87,16 @@ var airport_page = new function() {
             "shoe_store": "Shopping",
             "pharmacy": "Pharmacies",
             "point_of_interest": "Popular",
+            "night_club": "Entertainment",
+            "spa": "Entertainment",
+            "bank": "Miscellaneous",
+            "museum":  "Miscellaneous",
+            "mosque": "Miscellaneous",
+            "car_rental": "Transportation",
+            "taxi_stand": "Transportation",
+            "bus_station": "Transportation",
+            "train_station": "Transportation",
+            "parking": "Transportation",
         };
 
         for (var i = 0; i < this.current_airport.places.length; i++) {
